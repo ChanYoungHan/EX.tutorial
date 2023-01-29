@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  db_postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432
+
+  fastapi_example:
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - db_postgres
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
