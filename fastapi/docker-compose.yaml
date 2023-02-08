@@ -11,11 +11,17 @@ services:
   fastapi_example:
     build:
       dockerfile: Dockerfile
-    ports:
-      - 80:80
     depends_on:
       - db_postgres
     volumes:
       - type: bind
         source: ./
         target: /app
+
+  nginx:
+      build: 
+        dockerfile: nginx/Dockerfile
+      container_name: nginx
+      ports:
+      - "870:80"
+
