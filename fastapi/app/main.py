@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from typing import Union
+import requests
 
 # from app.database.db_sqlalchemy import DB_SQLAlchemy, UserInfo, CreditCradInfo
 
@@ -10,7 +11,13 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "control server"}
+
+@app.get("/clinets/get_connection_check")
+def read_client_info():
+    x = requests.get('http://10.28.157.2')
+    return x.json()
+
 
 
 # @app.get("/get_user_credit_info/{name}")
