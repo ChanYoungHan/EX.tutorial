@@ -13,6 +13,8 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - db_postgres
+    ports:
+      - 80:80
     volumes:
       - type: bind
         source: ./
