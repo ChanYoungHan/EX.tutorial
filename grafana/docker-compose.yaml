@@ -1,0 +1,7 @@
+version: '3.1'
+services:
+  grafana:
+    image: grafana/grafana-enterprise:latest
+    # ports:
+    # - 3000:3000
+    network_mode: host
