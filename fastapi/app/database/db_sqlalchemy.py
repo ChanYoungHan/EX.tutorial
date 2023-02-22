@@ -30,7 +30,7 @@ class UserInfo(Base):
 
 class DB_SQLAlchemy:
     def __init__(self) -> None:
-        RDS_HOSTNAME = "host.docker.internal"
+        RDS_HOSTNAME = "db_postgres"
         RDS_PORT = "5432"
         RDS_DB_NAME = "postgres"
         RDS_USERNAME = "postgres"
