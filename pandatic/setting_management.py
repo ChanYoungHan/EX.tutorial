@@ -7,6 +7,7 @@ from pydantic import (
     PostgresDsn,
     AmqpDsn,
     Field,
+    validator
 )
 
 class TestEnum(Enum):
@@ -19,8 +20,10 @@ class SubModel(BaseModel):
 
 
 class Settings(BaseSettings):
-    testenum : TestEnum = Field(default=TestEnum.opt1, env="TEST_ENUM")
-    
+    case_enum : TestEnum = Field(default=TestEnum.opt1, env="TEST_ENUM2")
+    dependany_caseenum : AmqpDsn = Field(default=lambda: "amqps://opt1:pass@localhost:1111" if case_enum == TestEnum.opt1 else "amqps://opt1:pass@localhost:2222")
+
+
     auth_key: str
     api_key: str = Field(default="tt001", env="my_api_key2")
 
@@ -46,6 +49,12 @@ class Settings(BaseSettings):
             },
             "redis_dsn": {"env": ["service_redis_dsn", "redis_url"]},
         }
+    
+    # @validator('case_enum')
+    # def validate_case_enum(cls, case):
+    #     if case == TestEnum.opt1:
+    #         return "amqps://opt1:pass@localhost:1111"
+    #     else:
+    #         return "amqps://opt2:pass@localhost:2222"
 
-
-print(Settings().dict())
+print(Settings())
