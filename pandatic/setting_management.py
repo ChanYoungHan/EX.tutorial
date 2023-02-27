@@ -21,10 +21,10 @@ class SubModel(BaseModel):
 
 class Settings(BaseSettings):
     case_enum : TestEnum = Field(default=TestEnum.opt1, env="TEST_ENUM2")
-    dependany_caseenum : AmqpDsn = Field(default=lambda: "amqps://opt1:pass@localhost:1111" if case_enum == TestEnum.opt1 else "amqps://opt1:pass@localhost:2222")
+    dependany_caseenum : AmqpDsn = Field(default="opt1:pass@localhost:1111" if case_enum == TestEnum.opt1 else "amqps://opt1:pass@localhost:2222")
 
 
-    auth_key: str
+    # auth_key: str
     api_key: str = Field(default="tt001", env="my_api_key2")
 
     redis_dsn: RedisDsn = "redis://user:pass@localhost:6379/1"
@@ -44,9 +44,10 @@ class Settings(BaseSettings):
     class Config:
         env_prefix = "my_prefix_"  # defaults to no prefix, i.e. ""
         fields = {
-            "auth_key": {
-                "env": "my_auth_key",
-            },
+            # "auth_key": {
+            #     "env": "my_auth_key",
+            #     "default": "etddssa"
+            # },
             "redis_dsn": {"env": ["service_redis_dsn", "redis_url"]},
         }
     
