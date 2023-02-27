@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import datetime
 from pydantic import (
     BaseModel,
     BaseSettings,
@@ -21,8 +22,8 @@ class SubModel(BaseModel):
 
 class Settings(BaseSettings):
     case_enum : TestEnum = Field(default=TestEnum.opt1, env="TEST_ENUM2")
-    dependany_caseenum : AmqpDsn = Field(default="opt1:pass@localhost:1111" if case_enum == TestEnum.opt1 else "amqps://opt1:pass@localhost:2222")
-
+    dep_case:AmqpDsn = Field(default="amqp://user:pass@localhost:5672/", env= "DEP_CASE")
+    created_at = Field(default="09:00", env="CREATED_AT")
 
     # auth_key: str
     api_key: str = Field(default="tt001", env="my_api_key2")
@@ -51,11 +52,18 @@ class Settings(BaseSettings):
             "redis_dsn": {"env": ["service_redis_dsn", "redis_url"]},
         }
     
-    # @validator('case_enum')
-    # def validate_case_enum(cls, case):
-    #     if case == TestEnum.opt1:
-    #         return "amqps://opt1:pass@localhost:1111"
-    #     else:
-    #         return "amqps://opt2:pass@localhost:2222"
+    @validator('created_at')
+    def validate_case_enum(cls, time_in):
+        print("time_in : ", time_in)
+        return datetime.now()
 
-print(Settings())
+    # def check_value(self):
+    #     if self.case_enum == TestEnum.opt1:
+    #         print("...")
+    #         self.test = Field(default="...")
+    #     else:
+    #         print(";;")
+
+setting = Settings()
+print(setting)
+
