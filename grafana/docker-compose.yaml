@@ -3,5 +3,10 @@ services:
   grafana:
     image: grafana/grafana-enterprise:latest
     # ports:
-    # - 3000:3000
+    #   - 3000:3000
     network_mode: host
+    volumes:
+      - grafana:/var/lib/grafana
+
+volumes:
+  grafana:
