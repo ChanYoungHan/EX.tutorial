@@ -2,6 +2,8 @@ version: '3.1'
 services:
   prometheus:
     image: prom/prometheus:latest
+    ports:
+      - 9090:9090
     expose:
       - 9090
     volumes:
@@ -17,6 +19,8 @@ services:
     restart: unless-stopped
     volumes:
       - '/:/host:ro,rslave'
+    ports:
+      - 9100:9100
     expose:
       - 9100
 
@@ -40,5 +44,4 @@ services:
 
 volumes:
   prometheus:
-  grafana:
   loki:
